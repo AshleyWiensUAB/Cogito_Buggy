@@ -73,7 +73,6 @@ var LandingVolume: float = 0.8
 @export var JUMP_VELOCITY : float= 4.5
 @export var CROUCH_JUMP_VELOCITY : float = 3.0
 @export var WALKING_SPEED : float = 5.0
-@export var SPRINTING_SPEED : float = 8.0
 @export var CROUCHING_SPEED : float = 3.0
 @export var CROUCHING_DEPTH : float = -0.9
 @export var CAN_CROUCH_JUMP = true
@@ -91,6 +90,11 @@ var LandingVolume: float = 0.8
 @export var TOGGLE_CROUCH : bool = false
 ## How much strength the player has to push RigidBody3D objects.
 @export var PLAYER_PUSH_FORCE : float = 1.3
+
+@export_group("Glitch Properties")
+@export var SPRINTING_SPEED : float = 8.0
+@export var MAX_SPEED : float = 100.0
+
 
 @export_group("Headbob Properties")
 ## Head bob strength. Currently controlled/overridden by the in-game options.
@@ -1066,7 +1070,7 @@ func _physics_process(delta):
 		direction = (body.global_transform.basis * Vector3(slide_vector.x, 0.0, slide_vector.y)).normalized()
 		current_speed = (sliding_timer.time_left / sliding_timer.wait_time + 0.5) * SLIDING_SPEED
 	
-	current_speed = clamp(current_speed, 0.5, 12.0)
+	current_speed = clamp(current_speed, 0.5, MAX_SPEED)
 	
 	if direction:
 		main_velocity.x = direction.x * current_speed
